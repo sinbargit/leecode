@@ -69,4 +69,46 @@ var threeSum = function(nums) {
     
     return duplicatless(arr)
 };
+//新做法
+function threeSum(nums) {
+	var arr = []
+	nums = nums.sort(function(a,b){
+		if(a>b)
+		{
+			return 1;
+		}
+		else{
+			return -1;
+		}
+	});
+    console.log(nums,'-')
+	for(var i=0;i<nums.length;i++)
+	{
+		var twoSum = 0-nums[i];
+		var low = i+1;
+	    var high = nums.length-1;
+	    while(low<high)
+	    {
+	    	var sum = nums[low]+nums[high];
+	    	if(sum>twoSum)
+	    	{
+	    		high--;
+	    	}
+	    	else if(sum<twoSum)
+	    	{
+	    		low++;
+	    	}
+	    	else
+	    	{
+	    		arr.push([nums[i],nums[low],nums[high]])
+                while(nums[low]===nums[low+1]&&low<high){low++};
+                 while(nums[high]===nums[high-1]&&low<high){high--};
+	    		low++;
+	    		high--;
+	    	}
+	    }
+        while(nums[i] === nums[i+1]&&i<nums.length) {i++};
+	}
+	return arr;
+}
 console.log(threeSum([13,-5,3,3,-1,13,3,1,-9,-4,9,12,6,-9,-6,-12,-8,3,12,14,4,-15,2,-11,4,-12,10,9,-6,-3,-8,14,7,3,2,-8,-7,-10,8,-8,-7,-6,-11,6,-7,-2,9,-8,8,-2,13,-10,-2,0,-14,-13,-4,11,3,-3,-7,3,-4,8,13,13,-15,-9,10,0,-2,-12,1,2,9,1,8,-4,8,-7,9,7,-2,-15,14,0,-13,-13,-12,-2,-1,-11,8,10,12,6,8,4,12,3,11,-12,-2,-3,5,-15,6,-10,-4,-1,-1,-10,13]))
