@@ -13,13 +13,21 @@ var numIslands = function(grid) {
 	{
 	    var nodeArr = stack.pop();
 	    grid[nodeArr[0]][nodeArr[1]]=0;
-	    if(grid[nodeArr[0]+1]&&grid[nodeArr[0]+1][nodeArr[1]])
+	    if(grid[nodeArr[0]+1]&&grid[nodeArr[0]+1][nodeArr[1]]==1)
 	    {
 		stack.push([nodeArr[0]+1,nodeArr[1]])
 	    }
-	    if(grid[nodeArr[0]]&&grid[nodeArr[0]][nodeArr[1]+1])
+	    if(grid[nodeArr[0]]&&grid[nodeArr[0]][nodeArr[1]+1]==1)
 	    {
 		stack.push([nodeArr[0],nodeArr[1]+1])
+	    }
+		if(grid[nodeArr[0]]&&grid[nodeArr[0]][nodeArr[1]-1]==1)
+	    {
+		stack.push([nodeArr[0],nodeArr[1]-1])
+	    }
+		if(grid[nodeArr[0]]&&grid[nodeArr[0]-1][nodeArr[1]]==1)
+	    {
+		stack.push([nodeArr[0]-1,nodeArr[1]])
 	    }
 
 	}
@@ -35,7 +43,6 @@ var numIslands = function(grid) {
 		row = parseInt(row)
 		col = parseInt(col)
 		deep(row,col)
-		console.log(grid)
 	    }
 	}
     }
