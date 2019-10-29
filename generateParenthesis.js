@@ -8,7 +8,6 @@ var generateParenthesis = function(n) {
 	var arr = [];
 	var cur = '';
 	function generate(left,cur,right){
-		console.log(left,'--',right,'--',cur)
 		if(cur.length==n*2)
 		{
 			arr.push(cur)
@@ -16,11 +15,11 @@ var generateParenthesis = function(n) {
 		}
 		if(left<n)
 		{
-			generate(++left,cur+='(',right)
+			generate(left+1,cur+'(',right)
 		}
 		if(right<left)
 		{
-			generate(left,cur+=')',++right)
+			generate(left,cur+')',right+1)
 		}
 	}
 	generate(0,'',0)
