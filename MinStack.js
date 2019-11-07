@@ -20,7 +20,7 @@ MinStack.prototype.push = function(x) {
 		if(this.min >= x)
 		{
 			this.stack.push(this.min)	
-			this.stack.push(x)
+	 		this.stack.push(x)
 			this.min = x
 		}
 		else{
