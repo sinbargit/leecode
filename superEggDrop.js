@@ -1,5 +1,14 @@
 var superEggDrop = function(K, N) {
 	var arr = [];
+	if(K==1){
+		return N 
+	}
+	if(N==1){
+		return 1
+	}
+	if(N==0){
+		return 0
+	}
 	function f(k,n)
 	{       
 		if(k==1){
@@ -24,23 +33,22 @@ var superEggDrop = function(K, N) {
 		return m
 	}
 	var h = N,l=1		
-	m1 =m2=1	
-	while(l<h)
+	while(l<=h)
 	{
 		var mid = parseInt((l+h)/2)
-		if(f(K,N-mid-1)<f(K-1,mid)&&f(K,N-mid)>f(K-1,mid-1))
+		if(f(K,N-mid-1)<=f(K-1,mid)&&f(K,N-mid)>=f(K-1,mid-1))
 		{
-			return f(K-1,mid)>f(K,N-mid)?mid:(mid+1)
+			return Math.min(f(K-1,mid),f(K,N-mid))
 		}
 		if(f(K,N-mid-1)<f(K-1,mid))
 		{
-			h = mid
+			h = mid-1
 		}
 		if(f(K,N-mid)>f(K-1,mid-1))
 		{
-			l = mid
+			l = mid+1
 		}
 	}
 	// return f(K,N)
 };
-console.log(superEggDrop(2,6));
+console.log(superEggDrop(1,2));
