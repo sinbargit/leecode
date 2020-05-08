@@ -3,24 +3,24 @@
  * @param {number[]} prices
  * @return {number}
  */
-var maxProfit = function(k, prices) {
-	var ik0 = ik_10=0;
-	var ik1 = ik_11=-prices[0]
-	var i = 1
-	while(i<prices.length)
-	{
-		var maxk = k;
-		while(maxk>=1)
-		{
-			ik0 = Math.max(ik0,ik1+prices[i])
-			ik1 = Math.max(ik1,ik_10-prices[i])
-			ik_10 = Math.max(ik_10,ik_11+price[i])
-			ik_11 = Math.max(ik_11,ik_10)
-			console.log(ik0,ik1)
-			maxk--;
-		}
-		i++
-	}
-	return ik0
+var maxProfit = function (k, prices) {
+    var dp = new Array(prices.length).fill('').map(() => {
+        return new Array(k).fill('').map(() => {
+            return new Array(2).fill('');
+        });
+    });
+    var i = 1;
+    dp[0][0][0] = 0
+    dp[0][0][1] = -prices[0]
+    while (i < prices.length) {
+        var _k = 1;
+        while (_k < k) {
+            dp[i][_k][0] = Math.max(dp[i-1][_k][0],dp[i-1][_k][1]+prices[i])
+            dp[i][_k][1] = Math.max(dp[i-1][_k][1],dp[i-1][_k-1][0]-prices[i])
+            _k++
+        }
+        i++;
+    }
+    return dp[i-1][k-1][0]
 };
-console.log(maxProfit(2,[3,3,5,0,0,3,1,4]))
+console.log(maxProfit(2, [3, 3, 5, 0, 0, 3, 1, 4]));
