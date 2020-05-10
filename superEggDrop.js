@@ -9,8 +9,31 @@ var superEggDrop = function(K, N) {
 	if(N==0){
 		return 0
 	}
-	function f(k,n)
-	{       
+	//	function f(k,n)
+	//	{       
+	//		if(k==1){
+	//			return n
+	//		}
+	//		if(n==1){
+	//			return 1
+	//		}
+	//		if(n==0){
+	//			return 0
+	//		}
+	//		if(arr[k+'_'+n])
+	//		{
+	//			return arr[k+'_'+n]
+	//		}
+	//		var m = Number.MAX_VALUE
+	//		for(var i=1;i<=n;i++)
+	//		{
+	//			m=Math.min(m,Math.max(f(k-1,i-1),f(k,n-i))+1);
+	//		}
+	//		arr[k+'_'+n] = m		
+	//		return m
+	//	}
+
+	function dp(k,n){
 		if(k==1){
 			return n
 		}
@@ -20,35 +43,37 @@ var superEggDrop = function(K, N) {
 		if(n==0){
 			return 0
 		}
-		if(arr[K+'_'+N])
+		if(arr[k+'_'+n])
 		{
-			return arr[K+'_'+N]
+			return arr[k+'_'+n]	
 		}
-		var m = Number.MAX_VALUE
-		for(var i=1;i<=n;i++)
+		var h = n,l=1		
+		while(l<=h)
 		{
-			m=Math.min(m,Math.max(f(k-1,i-1),f(k,n-i))+1);
+			var mid = parseInt((l+h)/2)
+			console.log(mid)
+			var f1 = dp(k,n-mid)
+			var f2 = dp(k,n-mid-1)
+			var g1 = dp(k-1,mid-1)
+			var g2 = dp(k-1,mid)
+			if(f2<=g2&&f1>=g1)
+			{
+				var r = Math.min(f1,g2)+1
+				arr[k+'_'+n] = r
+				return r 
+			}
+			if(f2<g2)
+			{
+				h = mid-1
+			}
+			if(f1>g1)
+			{
+				l = mid+1
+			}
 		}
-		arr[K+'_'+N] = m		
-		return m
-	}
-	var h = N,l=1		
-	while(l<=h)
-	{
-		var mid = parseInt((l+h)/2)
-		if(f(K,N-mid-1)<=f(K-1,mid)&&f(K,N-mid)>=f(K-1,mid-1))
-		{
-			return Math.min(f(K-1,mid),f(K,N-mid))
-		}
-		if(f(K,N-mid-1)<f(K-1,mid))
-		{
-			h = mid-1
-		}
-		if(f(K,N-mid)>f(K-1,mid-1))
-		{
-			l = mid+1
-		}
-	}
-	// return f(K,N)
-};
-console.log(superEggDrop(1,2));
+	};
+	return	dp(K,N)
+
+}
+
+	console.log(superEggDrop(2,6));

@@ -1,36 +1,29 @@
 /**
- *  * @param {number[]} nums
- *   * @return {number}
- *    */
+ * @param {number[]} nums
+ * @return {number}
+ */
 var rob = function(nums) {
-    function dp(first){
-	var n2 = nums[first];
-	var n1 = nums[first+1] 
-	var n = 0
-	var N = n1
-	while(n<nums.length)
-	{
-	    if(n==first)
-	    {
-		N = n2	
-	    }
-	    else if(n==first+1)
-	    {
-		N = Math.max(n1,n2)
-		n1 = N
-		n2 = n1
-	    }
-	    else {
-		N = Math.max(n2+nums[n],n1)
-		n2 = n1
-		n1 = N
-	    }
-	    n++
-	    console.log(N,'--',first)
+	if(nums.length===1) return nums[0];
+	function inner(nums,first){
+		var N = n1 = n2 = 0;
+		var i = 0;
+		var l = nums.length;
+		if(first){
+			l = l-1
+		}
+		else {
+			i = i+1
+		}
+		while(i<l)
+		{
+			N = Math.max(n2+nums[i],n1)
+			n2 = n1
+			n1 = N
+			i++
+		}
+		console.log(N)
+		return N
 	}
-	return N
-    }      
-
-    return Math.max(dp(0),dp(1))
+	return Math.max(inner(nums,true),inner(nums,false))
 };
-rob([2,3,2])
+console.log(rob([2,3,2]))
