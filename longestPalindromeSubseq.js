@@ -19,13 +19,14 @@ var longestPalindromeSubseq = function (s) {
     console.log(dp)
     let j = 1;
     while (j < s.length) {
-        let i = 0;
-       while (i <= j) {
-            dp[i][j] = s.charAt(i) === s.charAt(j) ? dp[i + 1][j - 1] : Math.max(dp[i][j - 1], dp[i - 1][j]);
-            i++;
+        let i = j-1;
+       while (i>=0 ) {
+            dp[i][j] = s.charAt(i) === s.charAt(j) ? (dp[i + 1][j - 1] + 2): Math.max(dp[i][j - 1], dp[i + 1][j]);
+            i--;
         }
         j++;
     }
-    return dp[0][j--];
+    console.log(dp)
+    return dp[0][j-1];
 };
 console.log(longestPalindromeSubseq('cbbd'));
