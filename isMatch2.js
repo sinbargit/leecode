@@ -13,7 +13,7 @@ var isMatch = function (s, p) {
         let pic = p.charAt(pi);
         let sic = s.charAt(si);
         let pic2 = p.charAt(pi + 1);
-        if (si <= s.length && (pic === sic || pic === '.')) {
+        if (si <= s.length && (pic === sic || sic && pic === '.')) {
             if (pic2 === '*') {
                 return match(si + 1, pi) || match(si + 1, pi + 2) || match(si, pi + 2);
             }
@@ -34,3 +34,4 @@ console.log(isMatch('aa', 'a*'));
 console.log(isMatch('ab', '.*'));
 console.log(isMatch('aab', 'c*a*b'));
 console.log(isMatch('mississippi', 'mis*is*p*.'));
+console.log(isMatch('a', '.*..a'));
