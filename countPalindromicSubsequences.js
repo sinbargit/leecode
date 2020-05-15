@@ -3,22 +3,24 @@
  * @return {number}
  */
 var countPalindromicSubsequences = function (S) {
+    const mod = 1000000007;
+
     function moreThanOne(s, c) {
         let i = 0, j = s.length - 1;
-        let target = null;
-        while (i < j) {
+        let left = null, right = null;
+        while ((i < s.length || j >= 0) && (right === null || left === null)) {
             if (s[i] === c) {
-                if (target !== i) return false;
-                target = i;
+                left === null && (left = i);
             }
             if (s[j] === c) {
-                if (target !== j) return false;
-                target = j;
+                right === null && (right = j);
             }
-            i--;
-            j++;
+            i++;
+            j--;
         }
-        return true;
+        // console.log([left, right]);
+        return [left, right];
+
     }
 
     const dp = new Array(S.length).fill('').map(() => {
@@ -31,34 +33,45 @@ var countPalindromicSubsequences = function (S) {
         (temp + 1 < S.length) && (dp[temp + 1][temp] = 0);
         temp++;
     }
-    console.log(dp)
+    // console.log(dp)
     while (j < S.length) {
-        let i = j-1;
+        let i = j - 1;
         while (i >= 0) {
             if (S.charAt(i) === S.charAt(j)) {
                 let cal = 2;
                 let current = S.charAt(j);
                 let s = S.substring(i + 1, j);
-                if (S.substring(i + 1, j).indexOf(current) === -1) {
+                if (s.indexOf(current) === -1) {
                     cal = 2;
                 }
-                else if (!moreThanOne(s, current)) {
-                    cal = 1;
-                }
                 else {
-                    cal = 0;
+                    const r = moreThanOne(s, current);
+                    if (r[0] === r[1]) {
+                        cal = 1;
+                    }
+                    else {
+                        cal = -dp[i + 1 + r[0] + 1][i + 1 + r[1] - 1];
+                    }
                 }
-                dp[i][j] = dp[i + 1][j - 1] * 2 + cal;
+                const temp = dp[i + 1][j - 1] * 2 + cal;
+                dp[i][j] = temp < 0 ? mod + temp : temp % mod;
             }
             else {
-                dp[i][j] = dp[i][j - 1] + dp[i + 1][j] - dp[i + 1][j - 1];
+                const temp = dp[i][j - 1] + dp[i + 1][j] - dp[i + 1][j - 1];
+                dp[i][j] = temp < 0 ? (mod + temp) : (temp % mod);
             }
             i--;
         }
         j++;
     }
-    console.log(dp)
-    return dp[0][S.length - 1];
+    // console.log(dp.join('\n'));
+    return dp[0][S.length - 1] % 1000000007;
 };
+//console.log(countPalindromicSubsequences('aaaa'));
 // console.log(countPalindromicSubsequences('bccb'));
-console.log(countPalindromicSubsequences('aaa'));
+// console.log(countPalindromicSubsequences('aaa'));
+// console.log(countPalindromicSubsequences('abcdabcdabcdabcdabcdabcdabcdabcddcbadcbadcbadcbadcbadcbadcbadcba'));
+// console.log(countPalindromicSubsequences('dbcbaaacdcbabcbddaac'));
+// console.log(countPalindromicSubsequences('baaddaaabaddccbbbdcbcccbdbdabdabdbadabddbbcbbcabbccdaccdbcbbcdcdbaadbcadacabcaaaadbcaddbbacddcdabaadcacacdcabaadacadcccdcbbcdabdcdacaacdcdbdacbdbcdcbaddaccabaaaabcadacdaddbcccbcdbadbdddaaabbdbdbcbcdab'));
+// console.log(countPalindromicSubsequences('bddaabdbbccdcdcbbdbddccbaaccabbcacbadbdadbccddccdbdbdbdabdbddcccadddaaddbcbcbabdcaccaacabdbdaccbaacc'));
+console.log(countPalindromicSubsequences('baaddaaabaddccbbbdcbcccbdbdabdabdbadabddbbcbbcabbccdaccdbcbbcdcdbaadbcadacabcaaaadbcaddbbacddcdabaadcacacdcabaadacadcccdcbbcdabdcdacaacdcdbdacbdbcdcbaddaccabaaaabcadacdaddbcccbcdbadbdddaaabbdbdbcbcdab'));
