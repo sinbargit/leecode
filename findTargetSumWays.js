@@ -3,6 +3,30 @@
  * @param {number} S
  * @return {number}
  */
+// dfs solution
+// var findTargetSumWays = function (nums, S) {
+//     let ans = 0;
+//
+//     function dfs(index, symbol, sum) {
+//         sum += (symbol * nums[index]);
+//         if (index === nums.length - 1) {
+//             if (sum === S) {
+//                 ans++;
+//             }
+//
+//         }
+//         else {
+//             dfs(index + 1, -1, sum);
+//             dfs(index + 1, 1, sum);
+//         }
+//     }
+//
+//     dfs(0, -1, 0);
+//     dfs(0, 1, 0);
+//     return ans;
+// };
+// console.log(findTargetSumWays([1, 1, 1, 1, 1], 3));
+// 背包解法
 var findTargetSumWays = function(nums, S) {
     let j_length = 0
     let sum = 0
@@ -51,6 +75,3 @@ var findTargetSumWays = function(nums, S) {
     console.log(dp)
     return dp[nums.length-1][Math.abs(sum+S)]
 };
-// console.log(findTargetSumWays([1,1,1,1,1],3))
-// console.log(findTargetSumWays([1000],1000))
- console.log(findTargetSumWays([1],2))
