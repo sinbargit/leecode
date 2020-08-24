@@ -27,17 +27,18 @@
  *
  */
 var isValidBST = function(root) {
-	if(root === null)   
+	if(!root)return true;
+	let min = Number.MIN_SAFE_INTEGER
+	let max = Number.MAX_SAFE_INTEGER
+	return isValid(min,max,root)
+	function isValid(min,max,root)
 	{
-		return true;
-	}
-	compare(root,null,null);
-	function compare(node,lower,upper)
-	{
-		if(lower!=null&&node.val<=lower) return false;	
-		if(upper!=null&&node.val>=upper) return false;
-		compare(node.right,node.val,upper)
-		compare(node.left,lower,node.val)
+		if(!root)return true
+		if(root.val>min&&max>root.val)
+		{
+			return isValid(min,root.val,root.left) && isValid(root.val,max,root.right)
+		}
+		return false;
 	}
 };
 
