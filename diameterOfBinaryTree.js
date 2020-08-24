@@ -16,13 +16,14 @@ var diameterOfBinaryTree = function (root) {
         if (root) {
             let left = deep(root.left);
             let right = deep(root.right);
-            max = left + right;
+            max = Math.max(left + right, max);
             return Math.max(left, right) + 1;
         }
         else {
             return 0;
         }
     }
-    deep(root)
+
+    deep(root);
     return max;
 };
