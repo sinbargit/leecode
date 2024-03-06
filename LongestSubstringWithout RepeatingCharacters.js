@@ -66,4 +66,25 @@ function lengthOfLongestSubstring(str)
 
 	return first?result:str.length
 }
-console.log(lengthOfLongestSubstring("etyyepfaesjlkzivdevdllygazxjndjrxhrdyyddqnqdoayshwxshxzjywu"))
+//console.log(lengthOfLongestSubstring("etyyepfaesjlkzivdevdllygazxjndjrxhrdyyddqnqdoayshwxshxzjywu"))
+
+function newFunc(str){
+	const map = new Map()
+	let cur=0
+	let len=0
+	for(let i = 0;i<str.length;i++){
+		const letter = str.charAt(i)
+		if(map.get(letter)!==undefined&&map.get(letter)>=cur){
+			cur = map.get(letter) + 1
+			map.set(letter,i)	
+			console.log(letter,'**',i,'**',cur)
+		}
+		else{
+			map.set(letter,i)	
+		}
+		console.log(cur,'---',i)
+		len=i-cur+1>len?i-cur+1:len
+	}
+	return len
+}
+console.log(newFunc('abcabcbb'))
